@@ -1,0 +1,55 @@
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Clube de Membros.dll.config
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Clube de Membros.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Clube de Membros.pdb
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\csc.exe
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\csc.exe.config
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\csc.rsp
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\csi.exe
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\csi.rsp
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CodeAnalysis.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.CSharp.Core.targets
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\Microsoft.VisualBasic.Core.targets
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.AppContext.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.Collections.Immutable.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.Diagnostics.StackTrace.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.IO.FileSystem.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.IO.FileSystem.Primitives.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\System.Reflection.Metadata.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\vbc.exe
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\vbc.exe.config
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\vbc.rsp
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\VBCSCompiler.exe
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\roslyn\VBCSCompiler.exe.config
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Antlr3.Runtime.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Microsoft.Web.Infrastructure.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Newtonsoft.Json.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Helpers.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Mvc.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Optimization.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Razor.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.Deployment.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.Razor.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\WebGrease.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Helpers.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Mvc.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Optimization.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.Razor.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.Deployment.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\System.Web.WebPages.Razor.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Newtonsoft.Json.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Antlr3.Runtime.pdb
+P:\C#\Web\Clube de Membros\Clube de Membros\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+P:\C#\Web\Clube de Membros\Clube de Membros\obj\Debug\Clube de Membros.csproj.CoreCompileInputs.cache
+P:\C#\Web\Clube de Membros\Clube de Membros\obj\Debug\Clube de Membros.csproj.CopyComplete
+P:\C#\Web\Clube de Membros\Clube de Membros\obj\Debug\Clube de Membros.dll
+P:\C#\Web\Clube de Membros\Clube de Membros\obj\Debug\Clube de Membros.pdb
