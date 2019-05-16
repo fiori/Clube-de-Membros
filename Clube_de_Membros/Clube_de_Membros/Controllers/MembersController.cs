@@ -18,11 +18,12 @@ namespace Clube_de_Membros.Controllers
         };
 
         // GET: Members
+        [Authorize]
         public ActionResult Index()
         {
             return View(mb);
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit()
         {
             return View(mb);
