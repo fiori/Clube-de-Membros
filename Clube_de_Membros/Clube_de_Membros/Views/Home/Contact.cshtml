@@ -2,18 +2,69 @@
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
-<div>@ViewBag.Message</div>
 
-<form method="post">
-    <textarea name="message"></textarea>
-    <input type="submit"/>
-</form>
+<div id="formSection">
+        <form method="post" id="contactForm">
+            <div>@ViewBag.Message</div>
+            <textarea data-bind="value:message, valueUpdate:'input'" name="message" id="message" maxlength="50"></textarea>
+            <input type="submit" value="send" />
+            <p><span data-bind="text:charactersRemaining"></span> characters remaining</p>
+            <p><img src="~/Images/progress.gif" id="progress" style="display: none" /></p>
+        </form>
+    
+</div>
+
+@*<div id="formSection">
+    @using (Ajax.BeginForm(new AjaxOptions
+    {
+        HttpMethod = "post",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "formSection"
+    }))
+    {
+        <form method="post">
+            <div>@ViewBag.Message</div>
+            <textarea data-bind="value:message, valueUpdate:'input'" name="message" maxlength="50"></textarea>
+            <input type="submit" value="send" />
+            <p><span data-bind="text:charactersRemaining"></span> characters remaining</p>
+        </form>
+    }
+</div>*@
+
+@section scripts
+{
+
+    <script src="~/Scripts/knockout-3.5.0.js"></script>
+    <script>
+        function ContactViewModel() {
+            var self = this;
+            self.message = ko.observable('');
+            self.charactersRemaining = ko.computed(function() {
+                 return 50 - self.message().length;
+            });
+        }
+
+        ko.applyBindings(new ContactViewModel());
+    </script>
+
+    <script>
+        $('#contactForm').submit(function() {
+            $('#progress').show();
+            $.post('', { message: $('message').val() }).done(function(response) {
+                setTimeout(function() { $('#formSection').html(response); }, 2000);
+            });
+            return false;
+        });
+    </script>
+
+    @*<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
+}
 
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
+    Flavio Fiori<br />
+    Southampton, 153 Mayfield Road<br />
     <abbr title="Phone">P:</abbr>
-    425.555.0100
+    07936.896.932
 </address>
 
 <address>

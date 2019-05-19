@@ -8,6 +8,7 @@ namespace Clube_de_Membros.Controllers
 {
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             return View();
@@ -31,7 +32,7 @@ namespace Clube_de_Membros.Controllers
         {
             ViewBag.Message = "Thanks for the feedback";
 
-            return View();
+            return PartialView("_ThanksForFeedback");
         }
     }
 }

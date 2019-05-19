@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -19,10 +20,10 @@ namespace Clube_de_Membros.Models
 
         [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
-        public byte[] Image { get; set; }
+
+        public string Image { get; set; }
 
         [Required]
-        [RegularExpression(@"\d{3,9}")]
         public string Password{ get; set; }
     }
 }

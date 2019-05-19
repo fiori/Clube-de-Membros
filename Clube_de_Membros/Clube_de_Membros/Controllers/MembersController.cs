@@ -18,7 +18,7 @@ namespace Clube_de_Membros.Controllers
         };
 
         // GET: Members
-        [Authorize]
+        //[Authorize]
         public ActionResult Index()
         {
             return View(mb);

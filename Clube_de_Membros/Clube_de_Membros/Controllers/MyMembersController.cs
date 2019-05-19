@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,10 +16,38 @@ namespace Clube_de_Membros.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: MyMembers
-        public ActionResult Index()
+        public MembersViewModel GetMembers(int page)
         {
-            return View(db.Members.ToList());
+            MembersViewModel viewModel = new MembersViewModel();
+            viewModel.currentPage = page;
+
+            //pag 1 -> 0, 2
+            //pag 2 -> 3, 5
+            //pag 3 -> 6, 8
+            //pag x -> (x-1)*rows, ((x-1)*rows)+(rows-1)
+            int rows = 3,
+                indexBegining = (page - 1) * rows,
+                indexEnding = ((page - 1) * rows) + (rows - 1);
+            
+            List<Members> allMembers = (from m in db.Members
+                orderby m.Id ascending
+                select m).ToList();
+            viewModel.maxPages = Convert.ToInt32(allMembers.Count/rows) + (allMembers.Count % rows!=0?1:0);
+            viewModel.filteredMembers = new LinkedList<Members>();
+            for (int i = indexBegining; (i <= indexEnding && i < allMembers.Count); i++)
+            {
+                viewModel.filteredMembers.AddLast(allMembers[i]);
+            }
+
+            return viewModel;
+        }
+
+        // GET: MyMembers/Index/5
+        public ActionResult Index(int id)
+        {
+            if(id > 0)
+                return View(GetMembers(id));
+            return View(GetMembers(1));
         }
 
         // GET: MyMembers/Details/5
@@ -28,6 +58,7 @@ namespace Clube_de_Membros.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Members members = db.Members.Find(id);
+            
             if (members == null)
             {
                 return HttpNotFound();
@@ -58,6 +89,36 @@ namespace Clube_de_Membros.Controllers
             return View(members);
         }
 
+        private string UpdatedPicInfo(Members members, HttpPostedFileBase Image)
+        {
+            IQueryable<String> IQOldImage =
+                from m in db.Members
+                where m.Id == members.Id
+                select m.Image;
+            String oldImg = IQOldImage.ToList().ElementAt(0);
+
+            String newImg = "Images/uploads/" + Image.FileName;
+            if (newImg != oldImg)
+            {
+                String path;
+                if (oldImg != null)
+                {
+                    path = Path.Combine(Server.MapPath("~/"), oldImg);
+                    System.IO.File.Delete(path);  //Delete old image
+                }
+                //Gets full path
+                path = Path.Combine(Server.MapPath("~/Images/uploads"), Image.FileName);
+                //Saves tmp image to final folder
+                Image.SaveAs(path);
+                //Fills in members object
+                return newImg;
+            }
+            else
+            {
+                return oldImg;
+            }
+        }
+
         // GET: MyMembers/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -78,10 +139,11 @@ namespace Clube_de_Membros.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth,Image,Password")] Members members)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth,Password")] Members members, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
+                members.Image = UpdatedPicInfo(members, Image);
                 db.Entry(members).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -112,6 +174,8 @@ namespace Clube_de_Membros.Controllers
             Members members = db.Members.Find(id);
             db.Members.Remove(members);
             db.SaveChanges();
+            var path = Path.Combine(Server.MapPath("~/"), members.Image);   //Gets full image path
+            System.IO.File.Delete(path);                                    //Deletes image
             return RedirectToAction("Index");
         }
 
