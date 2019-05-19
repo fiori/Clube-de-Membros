@@ -2,7 +2,12 @@
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<div>@ViewBag.Message</div>
+
+<form method="post">
+    <textarea name="message"></textarea>
+    <input type="submit"/>
+</form>
 
 <address>
     One Microsoft Way<br />
