@@ -83,6 +83,13 @@ namespace Clube_de_Membros.Controllers
         {
             if (ModelState.IsValid)
             {
+                if ((from m in db.Members where m.Email == members.Email select m.Email).Count() > 0)
+                {
+                    Response.Write("<script>alert('Email already exists!')</script>");
+                    return View(members);
+                }
+
+
                 if (string.IsNullOrEmpty(members.Email))
                 {
                     Response.Write("<script>alert('Email is empty!')</script>");
@@ -91,14 +98,16 @@ namespace Clube_de_Membros.Controllers
                 try
                 {
                     MailAddress to = new MailAddress(members.Email);
+                    
                     // Specify the directory you want to manipulate.
                     string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
-
-
+                    
                     // Determine whether the directory exists.
                     if (Directory.Exists(dir))
                     {
+                        //Send response to the user
                         Response.Write("<script>alert('The user already exists!')</script>");
+                        //Go back to the page
                         return View(members);
                     }
                     else
