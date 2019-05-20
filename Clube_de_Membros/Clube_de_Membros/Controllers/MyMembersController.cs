@@ -93,10 +93,8 @@ namespace Clube_de_Membros.Controllers
                 }
                 else
                 {
-                    // Try to create the directory.
+                    // create the directory.
                     DirectoryInfo di = Directory.CreateDirectory(dir);
-                    Console.WriteLine("The directory was created successfully at {0}.",
-                        Directory.GetCreationTime(dir));
                 }
 
                 String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
