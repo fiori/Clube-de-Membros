@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using Clube_de_Membros.Models;
@@ -82,27 +83,44 @@ namespace Clube_de_Membros.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Specify the directory you want to manipulate.
-                string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
+                if (string.IsNullOrEmpty(members.Email))
+                {
+                    Response.Write("<script>alert('Email is empty!')</script>");
+                    return View(members);
+                }
+                try
+                {
+                    MailAddress to = new MailAddress(members.Email);
+                    // Specify the directory you want to manipulate.
+                    string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
+
+
+                    // Determine whether the directory exists.
+                    if (Directory.Exists(dir))
+                    {
+                        Response.Write("<script>alert('The user already exists!')</script>");
+                        return View(members);
+                    }
+                    else
+                    {
+                        // create the directory.
+                        DirectoryInfo di = Directory.CreateDirectory(dir);
+                        String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
+                        Image.SaveAs(dir + "/" + Image.FileName);
+                        members.Image = newImg;
+                        db.Members.Add(members);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Response.Write("<script>alert('Email is not valid!')</script>");
+                    return View(members);
+                }
 
                 
-                // Determine whether the directory exists.
-                if (Directory.Exists(dir))
-                {
-                    Console.WriteLine("That path exists already.");
-                }
-                else
-                {
-                    // create the directory.
-                    DirectoryInfo di = Directory.CreateDirectory(dir);
-                }
-
-                String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
-                Image.SaveAs(dir + "/" + Image.FileName);
-                members.Image = newImg;
-                db.Members.Add(members);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
             return View(members);
@@ -200,8 +218,7 @@ namespace Clube_de_Membros.Controllers
             Members members = db.Members.Find(id);
             db.Members.Remove(members);
             db.SaveChanges();
-            var path = Path.Combine(Server.MapPath("~/"), members.Image);   //Gets full image path
-            System.IO.File.Delete(path);                                    //Deletes image
+            System.IO.File.Delete(Server.MapPath("~/Views/MyMembers/" + members.Image));                                    //Deletes image
             string root = Path.Combine(Server.MapPath("~/Images/Uploads"), members.Name);//Deletes empty directory
             // If directory does not exist, don't even try   
             if (Directory.Exists(root))

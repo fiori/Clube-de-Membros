@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var color = "green";
 }
 
 <h2>Index</h2>
@@ -28,38 +29,55 @@
         </th>
         <th></th>
     </tr>
-  
-@foreach (var item in Model.filteredMembers) {
-    //TODO: Allow ordering by drag
-    <tr draggable="true">
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @item.DateOfBirth.ToString("d")
-        </td>
-        <td>
-            @{
-                DateTime today = DateTime.Now;
-                TimeSpan ts = today - item.DateOfBirth;
-                DateTime Age = DateTime.MinValue + ts;
-                int Years = Age.Year - 1;
-            }
-            @Years
-        </td>
-        <td>
-            <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px;" src="@item.Image"/>
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+
+    @foreach (var item in Model.filteredMembers)
+    {
+        
+        DateTime today = DateTime.Now;
+        TimeSpan ts = today - item.DateOfBirth;
+        DateTime Age = DateTime.MinValue + ts;
+        int Years = Age.Year - 1;
+        if (Years > 20 && Years < 61)
+        {
+            color = "red";
+        }
+        else if (Years > 60)
+        {
+            color = "blue";
+        }
+        else
+        {
+            color = "green";
+        }
+
+        //TODO: Allow ordering by drag
+        <tr draggable="true" id="MembersTR" style="border-bottom: 2pt double black; border-top: 2pt double black; border-left: 2pt double black; border-right: 2pt double black; border-color: @color">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @item.DateOfBirth.ToString("d")
+            </td>
+            <td>
+
+                @Years
+
+
+            </td>
+            <td>
+                <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px;" src="@item.Image" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        <tr class="break"><td colspan="2"></td></tr>
+    }
 </table>
 <nav>
     <ul class="pagination">
