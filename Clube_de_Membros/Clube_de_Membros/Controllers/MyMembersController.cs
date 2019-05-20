@@ -235,7 +235,6 @@ namespace Clube_de_Membros.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth,Password")] Members members, HttpPostedFileBase Image)
         {
-            SaveXML();
             if (ModelState.IsValid)
             {
                     members.Image = UpdatedPicInfo(members, Image);
