@@ -10,7 +10,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 using Clube_de_Membros.Models;
+using WebGrease.Css.Extensions;
 
 namespace Clube_de_Membros.Controllers
 {
@@ -44,11 +47,44 @@ namespace Clube_de_Membros.Controllers
             return viewModel;
         }
 
+        public void SaveXML()
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.OmitXmlDeclaration = true;
+            settings.NewLineOnAttributes = true;
+            settings.ConformanceLevel = ConformanceLevel.Auto;
+
+            using (XmlWriter write = XmlWriter.Create(Server.MapPath("~/XML/XMLFILE.xml"), settings))
+            {
+                write.WriteStartDocument();
+                write.WriteStartElement("Members");
+                foreach (var m in db.Members)
+                {
+                    write.WriteStartElement("Member");
+                    write.WriteElementString("ID", m.Id.ToString());
+                    write.WriteElementString("Name", m.Name);
+                    write.WriteElementString("Email", m.Email);
+                    write.WriteElementString("DateOfBirth", m.DateOfBirth.ToString("d"));
+                    write.WriteElementString("Image", m.Image);
+                    write.WriteEndElement();
+
+                }
+                write.WriteEndElement();
+
+                write.WriteEndDocument();
+                write.Close();
+                Response.Write("<script>alert('XML File Created!')</script>");
+            }
+        }
+
         // GET: MyMembers/Index/5
         public ActionResult Index(int id)
         {
             if(id > 0)
                 return View(GetMembers(id));
+            else if (id == -1)
+                SaveXML();
             return View(GetMembers(1));
         }
 
@@ -191,6 +227,7 @@ namespace Clube_de_Membros.Controllers
             return View(members);
         }
 
+
         // POST: MyMembers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -198,6 +235,7 @@ namespace Clube_de_Membros.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth,Password")] Members members, HttpPostedFileBase Image)
         {
+            SaveXML();
             if (ModelState.IsValid)
             {
                     members.Image = UpdatedPicInfo(members, Image);
@@ -248,6 +286,29 @@ namespace Clube_de_Membros.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Read()
+        {
+            LinkedList<Members> membersFromXML = new LinkedList<Members>();
+            XDocument doc = XDocument.Load(Server.MapPath("~/XML/XMLFILE.xml"));
+
+            IEnumerable<XElement> iex = doc.Root.Elements("Member");
+            foreach (XElement x in iex)
+            {
+                membersFromXML.AddLast(new Members()
+                {
+                    Id = Convert.ToInt32(x.Element("ID").Value),
+                    Name = x.Element("Name").Value,
+                    Email = x.Element("Email").Value,
+                    DateOfBirth = DateTime.Parse(x.Element("DateOfBirth").Value),
+                    Image = x.Element("Image").Value
+                });
+
+            }
+            
+            //xmlreader.Close();
+            return View(membersFromXML);
         }
     }
 }

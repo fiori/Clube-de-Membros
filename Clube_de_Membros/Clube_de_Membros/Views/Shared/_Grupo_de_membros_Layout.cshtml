@@ -25,6 +25,13 @@
                 </button>
                 @Html.ActionLink(AppName, "Index", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("XML SAVING", "Index", new { controller = "MyMembers", Id = -1})</li>
+                    <li>@Html.ActionLink("XML READING", "Read", new { controller = "MyMembers"})</li>
+                    
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container body-content">

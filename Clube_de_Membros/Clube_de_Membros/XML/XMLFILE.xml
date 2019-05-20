@@ -1,0 +1,23 @@
+﻿<Members>
+  <Member>
+    <ID>51</ID>
+    <Name>Rufus</Name>
+    <Email>rufus@test.com</Email>
+    <DateOfBirth>10/05/1990</DateOfBirth>
+    <Image>../../Images/uploads/Rufus/download.jpg</Image>
+  </Member>
+  <Member>
+    <ID>52</ID>
+    <Name>Teste2</Name>
+    <Email>test@gmail.com</Email>
+    <DateOfBirth>10/05/1910</DateOfBirth>
+    <Image>../../Images/uploads/Teste2/cube_3d_graphics_black_gray_background_3d_graphics_74555_3840x2160.jpg</Image>
+  </Member>
+  <Member>
+    <ID>53</ID>
+    <Name>Rita</Name>
+    <Email>rita@hotmail.com</Email>
+    <DateOfBirth>10/05/1990</DateOfBirth>
+    <Image>../../Images/uploads/Rita/NRb37z.jpg</Image>
+  </Member>
+</Members>

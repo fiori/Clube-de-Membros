@@ -1,0 +1,27 @@
+﻿
+@using System.Data
+@using System.Xml
+@model IEnumerable<Clube_de_Membros.Models.Members>
+
+@{
+    ViewBag.Title = "XMLReading";
+}
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Image</th>
+    </tr>
+    @foreach (var member in Model)
+    {
+    <tr>
+        <td>@member.Id</td>
+        <td>@member.Name</td>
+        <td>@member.Email</td>
+        <td>@member.DateOfBirth.ToString("D")</td>
+        <td><img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px;" src="@member.Image"/></td>
+    </tr>
+    }
+</table>
