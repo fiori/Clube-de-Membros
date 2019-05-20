@@ -22,8 +22,5 @@ namespace Clube_de_Membros.Models
         public DateTime DateOfBirth { get; set; }
 
         public string Image { get; set; }
-
-        [Required]
-        public string Password{ get; set; }
     }
 }

@@ -233,12 +233,12 @@ namespace Clube_de_Membros.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth,Password")] Members members, HttpPostedFileBase Image)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,DateOfBirth")] Members members, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
-                    members.Image = UpdatedPicInfo(members, Image);
-                    db.Entry(members).State = EntityState.Modified;
+                members.Image = UpdatedPicInfo(members, Image);   
+                db.Entry(members).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
             }
