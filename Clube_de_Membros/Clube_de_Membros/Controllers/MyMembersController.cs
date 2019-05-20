@@ -25,7 +25,7 @@ namespace Clube_de_Membros.Controllers
             //pag 2 -> 3, 5
             //pag 3 -> 6, 8
             //pag x -> (x-1)*rows, ((x-1)*rows)+(rows-1)
-            int rows = 3,
+            int rows = 6,
                 indexBegining = (page - 1) * rows,
                 indexEnding = ((page - 1) * rows) + (rows - 1);
             
@@ -77,10 +77,30 @@ namespace Clube_de_Membros.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,DateOfBirth,Image,Password")] Members members)
+        public ActionResult Create([Bind(Include = "Id,Name,Email,DateOfBirth,Password")] Members members, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
+                // Specify the directory you want to manipulate.
+                string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
+
+                
+                // Determine whether the directory exists.
+                if (Directory.Exists(dir))
+                {
+                    Console.WriteLine("That path exists already.");
+                }
+                else
+                {
+                    // Try to create the directory.
+                    DirectoryInfo di = Directory.CreateDirectory(dir);
+                    Console.WriteLine("The directory was created successfully at {0}.",
+                        Directory.GetCreationTime(dir));
+                }
+
+                String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
+                Image.SaveAs(dir + "/" + Image.FileName);
+                members.Image = newImg;
                 db.Members.Add(members);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -176,6 +196,12 @@ namespace Clube_de_Membros.Controllers
             db.SaveChanges();
             var path = Path.Combine(Server.MapPath("~/"), members.Image);   //Gets full image path
             System.IO.File.Delete(path);                                    //Deletes image
+            string root = Path.Combine(Server.MapPath("~/Images/Uploads"), members.Name);//Deletes empty directory
+            // If directory does not exist, don't even try   
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root);
+            }
             return RedirectToAction("Index");
         }
 
