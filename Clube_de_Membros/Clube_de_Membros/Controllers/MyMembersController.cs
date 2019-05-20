@@ -83,25 +83,10 @@ namespace Clube_de_Membros.Controllers
         {
             if (ModelState.IsValid)
             {
-                if ((from m in db.Members where m.Email == members.Email select m.Email).Count() > 0)
+                if (EmailVerefication(members))
                 {
-                    Response.Write("<script>alert('Email already exists!')</script>");
-                    return View(members);
-                }
-
-
-                if (string.IsNullOrEmpty(members.Email))
-                {
-                    Response.Write("<script>alert('Email is empty!')</script>");
-                    return View(members);
-                }
-                try
-                {
-                    MailAddress to = new MailAddress(members.Email);
-                    
                     // Specify the directory you want to manipulate.
                     string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
-                    
                     // Determine whether the directory exists.
                     if (Directory.Exists(dir))
                     {
@@ -121,18 +106,38 @@ namespace Clube_de_Membros.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-
-                }
-                catch (Exception e)
-                {
-                    Response.Write("<script>alert('Email is not valid!')</script>");
-                    return View(members);
                 }
 
-                
+                return View(members);
             }
 
             return View(members);
+        }
+
+        private bool EmailVerefication(Members members)
+        {
+            if (string.IsNullOrEmpty(members.Email))
+            {
+                Response.Write("<script>alert('Email is empty!')</script>");
+                return false;
+            }
+
+            if ((from m in db.Members where m.Email == members.Email select m.Email).Count() > 0)
+            {
+                Response.Write("<script>alert('Email already exists!')</script>");
+                return false;
+            }
+            try
+            {
+                MailAddress to = new MailAddress(members.Email);
+            }
+            catch (Exception e)
+            {
+                Response.Write("<script>alert('Email is not valid!')</script>");
+                return false;
+            }
+
+            return true;
         }
 
         private string UpdatedPicInfo(Members members, HttpPostedFileBase Image)
@@ -148,7 +153,6 @@ namespace Clube_de_Membros.Controllers
             try
             {
                  String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
-
 
                 if (newImg != oldImg)
                 {
@@ -196,10 +200,10 @@ namespace Clube_de_Membros.Controllers
         {
             if (ModelState.IsValid)
             {
-                members.Image = UpdatedPicInfo(members, Image);
-                db.Entry(members).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    members.Image = UpdatedPicInfo(members, Image);
+                    db.Entry(members).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
             }
             return View(members);
         }
