@@ -28,10 +28,11 @@
 
         <dt>
             @Html.DisplayNameFor(model => model.DateOfBirth)
+            
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
+            @Model.DateOfBirth.ToString("d")
         </dd>
 
         <dt>
@@ -39,7 +40,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Image)
+            
+            <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px;" src="@Model.Image"/>
         </dd>
 
         <dt>

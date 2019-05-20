@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -117,26 +118,33 @@ namespace Clube_de_Membros.Controllers
                 select m.Image;
             String oldImg = IQOldImage.ToList().ElementAt(0);
 
-            String newImg = "Images/uploads/" + Image.FileName;
-            if (newImg != oldImg)
+            // Specify the directory you want to manipulate.
+            string dir = Path.Combine(Server.MapPath("~/Images/uploads/"), members.Name);
+            try
             {
-                String path;
-                if (oldImg != null)
+                 String newImg = "../../Images/uploads/" + members.Name + "/" + Image.FileName;
+
+
+                if (newImg != oldImg)
                 {
-                    path = Path.Combine(Server.MapPath("~/"), oldImg);
-                    System.IO.File.Delete(path);  //Delete old image
+
+                    if (oldImg != null)
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Views/MyMembers/" + oldImg)); //Delete old image
+                    }
+
+                    //Saves tmp image to final folder
+                    Image.SaveAs(dir + "/" + Image.FileName);
+                    //Fills in members object
+                    return newImg;
                 }
-                //Gets full path
-                path = Path.Combine(Server.MapPath("~/Images/uploads"), Image.FileName);
-                //Saves tmp image to final folder
-                Image.SaveAs(path);
-                //Fills in members object
-                return newImg;
             }
-            else
+            catch (Exception e)
             {
                 return oldImg;
             }
+
+            return oldImg;
         }
 
         // GET: MyMembers/Edit/5
